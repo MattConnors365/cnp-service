@@ -1,3 +1,4 @@
+from ..exceptions import CNPInvalidLengthError, CNPInvalidCharacterError
 from dataclasses import dataclass
 from datetime import date
 from typing import Literal
@@ -22,14 +23,17 @@ def determine_gender_dob_and_foreigner_status(cnp: str) -> CNPAnalysisGenderAndD
         cnp (str): 13-digit string
 
     Raises:
-        ValueError: If the cnp isn't a 13-digit string
+        CNPInvalidLengthError: If CNP is not a 13 character string
+        CNPInvalidCharacterError: If CNP contains non-digit characters
         ValueError: If the first digit is invalid
     Returns:
         CNPAnalysisGenderAndDate: DataClass that holds previously mentioned fields: gender, date_of_birth, is_foreigner, century_deterministic
     """
 
-    if not (cnp.isdigit() and len(cnp) == 13):
-        raise ValueError("CNP must be a 13-digit string")
+    if not len(cnp) == 13:
+        raise CNPInvalidLengthError()
+    if not cnp.isdigit():
+        raise CNPInvalidCharacterError()
 
     s = int(cnp[0])
     yy = int(cnp[1:3])

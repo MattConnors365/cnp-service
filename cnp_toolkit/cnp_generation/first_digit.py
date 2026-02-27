@@ -19,26 +19,26 @@ def first_digit(legal_gender: Literal["Male", "Female"], year_of_birth: int, is_
         is_foreigner (bool): True if born outside Romania.
 
     Raises:
-        ValueError: If input types are incorrect or values out of range.
+        TypeError: If input types are incorrect
+        ValueError: If values out of range.
 
     Returns:
         int: The 1-digit number encoding gender, century, and foreigner status.
     """
+
     # Validation
+
     if not isinstance(legal_gender, str):
-        raise ValueError("legal_gender must be a string ('Male' or 'Female').")
-
+        raise TypeError(f"legal_gender must be a string, not {type(legal_gender).__name__}.")
     if not isinstance(year_of_birth, int):
-        raise ValueError("year_of_birth must be a 4-digit integer.")
-
+        raise TypeError(f"year_of_birth must be an integer, not {type(year_of_birth).__name__}.")
     if not isinstance(is_foreigner, bool):
-        raise ValueError("is_foreigner must be a boolean.")
-
-    if year_of_birth < 1800 or year_of_birth > 2099:
-        raise ValueError("year_of_birth must be between 1800 and 2099.")
+        raise TypeError(f"is_foreigner must be a boolean, not {type(is_foreigner).__name__}.")
 
     if legal_gender not in ("Male", "Female"):
         raise ValueError("legal_gender must be 'Male' or 'Female'.")
+    if not (1800 <= year_of_birth <= 2099):
+        raise ValueError("year_of_birth must be between 1800 and 2099.")
 
     # Base digit
     digit = 1 if legal_gender == "Male" else 2

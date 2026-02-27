@@ -1,3 +1,4 @@
+from cnp_toolkit.exceptions import CNPInvalidLengthError, CNPInvalidCharacterError
 import pytest
 from datetime import date
 from cnp_toolkit.cnp_analysis.determine_gender_dob_foreign import determine_gender_dob_and_foreigner_status
@@ -30,10 +31,10 @@ def test_foreigner_century_not_deterministic():
     assert result.is_foreigner is True
     
 def test_invalid_length():
-    with pytest.raises(ValueError):
+    with pytest.raises(CNPInvalidLengthError):
         determine_gender_dob_and_foreigner_status("123")
 
 
 def test_non_numeric():
-    with pytest.raises(ValueError):
+    with pytest.raises(CNPInvalidCharacterError):
         determine_gender_dob_and_foreigner_status("ABCDEFGHIJKLM")

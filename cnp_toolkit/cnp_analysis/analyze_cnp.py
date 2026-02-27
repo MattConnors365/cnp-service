@@ -1,3 +1,4 @@
+from ..exceptions import CNPInvalidLengthError, CNPInvalidCharacterError
 from .determine_gender_dob_foreign import determine_gender_dob_and_foreigner_status
 from .get_county_name import get_county_name
 from .validate_unique_code import validate_unique_code
@@ -26,13 +27,16 @@ def analyze_cnp(cnp: str) -> CNPAnalysis:
         cnp (str): 13-digit numeric string
 
     Raises:
-        ValueError: If CNP is not a 13-digit numeric string
+        CNPInvalidLengthError: If CNP is not a 13 character string
+        CNPInvalidCharacterError: If CNP contains non-digit characters
 
     Returns:
         CNPAnalysis: Data extracted from the analysis
     """
-    if not (cnp.isdigit() and len(cnp) == 13):
-        raise ValueError("CNP must be a 13-digit string")
+    if not len(cnp) == 13:
+        raise CNPInvalidLengthError()
+    if not cnp.isdigit():
+        raise CNPInvalidCharacterError()
 
     # 1. Gender, DOB, century, foreigner
     gender_dob = determine_gender_dob_and_foreigner_status(cnp)

@@ -25,9 +25,9 @@ def test_first_digit_invalid_inputs():
     with pytest.raises(ValueError):
         first_digit("Male", 2100, False)
     # Wrong types
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         first_digit(123, 1990, False)
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         first_digit("Male", "1990", False)
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         first_digit("Male", 1990, "nope")

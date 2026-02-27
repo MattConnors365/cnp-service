@@ -23,7 +23,8 @@ def generate_cnp(
         nnn (Optional[str], optional): If you already thought of a unique code. Defaults to None.
 
     Raises:
-        ValueError: If provided NNN isn't a 3-digit string
+        TypeError: If provided NNN isn't a string
+        ValueError: If provided NNN isn't 3 digits long
         ValueError: If provided NNN isn't in the range 001-999
 
     Returns:
@@ -35,8 +36,10 @@ def generate_cnp(
     if nnn is None:
         nnn = generate_unique_code()
     else:
-        if not (nnn.isdigit() and len(nnn) == 3):
-            raise ValueError("NNN must be a 3-digit string.")
+        if not isinstance(nnn, str):
+            raise TypeError("NNN must be a string.")
+        elif not (nnn.isdigit() and len(nnn) == 3):
+            raise ValueError("NNN must be 3 digits long.")
         elif int(nnn) not in range(1, 1000):
             raise ValueError("NNN must be between 001-999")
     partial = f"{digit_one}{dob_sequence}{county_code}{nnn}"
