@@ -9,7 +9,18 @@ from cnp_toolkit.cnp_generation.generate_cnp import generate_cnp
 from cnp_toolkit.exceptions import CNPError
 from cnp_toolkit.checksum import generate_checksum
 
-# Create your views here.
+
+@api_view(["GET"])
+def api_root(request):
+    return Response({
+        "name": "Romanian CNP API",
+        "version": "1.0",
+        "endpoints": {
+            "analyze": request.build_absolute_uri("analyze/"),
+            "generate": request.build_absolute_uri("generate/"),
+            "validate": request.build_absolute_uri("validate/")
+        }
+    })
 
 @api_view(["POST"])
 def analyze_endpoint(request):
